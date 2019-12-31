@@ -24,11 +24,11 @@
 <form method="post" action="loginAction.perform">
 	<table>
 		<tr>
-			<td>Username:<td>
+			<td>用户名:<td>
 			<td><input type="text" size="30" name="username"></td>
 		</tr>
 		<tr>
-			<td>Password:<td>
+			<td>密码:<td>
 			<td><input type="password" size="30" name="password"></td>
 		</tr>
 	</table>
