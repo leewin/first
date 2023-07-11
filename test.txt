@@ -1,0 +1,23 @@
+public void test() {
+        BufferedReader bufferedReader = null;
+        Process process = null;
+        List<String> physicalAddressList = new ArrayList<>();
+        try {
+            process = Runtime.getRuntime().exec("ipconfig /all");
+            bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream(), "GBK"));
+            String line = null;
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] items = line.split(":");
+                if (items.length != 2) {
+                    continue;
+                }
+                String value = items[1].trim();
+                if (value.split("-").length == 6 || value.split(":").length == 6) {
+                    physicalAddressList.add(value);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(String.join(",", physicalAddressList));
+    }
