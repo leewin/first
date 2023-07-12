@@ -21,3 +21,22 @@ public void test() {
         }
         System.out.println(String.join(",", physicalAddressList));
     }
+
+public class DataBaseConnection {
+    public Connection databaseConnection;
+
+    public Connection getConnection() {
+        String databaseName = "clinic2";
+        String databaseUser = "root";
+        String databasePw = "123456";
+        String url = "jdbc:mysql://127.0.0.1:3306/" + databaseName;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            databaseConnection = DriverManager.getConnection(url, databaseUser, databasePw);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+        return databaseConnection;
+    }
+}
