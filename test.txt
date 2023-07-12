@@ -40,3 +40,65 @@ public class DataBaseConnection {
         return databaseConnection;
     }
 }
+
+
+/**
+ * Alipay.com Inc. Copyright (c) 2004-2023 All Rights Reserved.
+ */
+package sample;
+
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.Random;
+
+/**
+ *
+ * @author wb-tl196301
+ * @version $Id: SafetyUtils.java, v 0.1 2023年03月07日 19:30 wb-tl196301 Exp $
+ */
+public class SafetyUtils {
+    private static final String SALT       = "M/VZNJ13wD+h6/hzltZaw8QOqHjvcbQu3B+PZhEv20c=";
+    public static final  String TOKEN_NAME = "clinic_token";
+    public static final  String MAC        = "mac";
+    public static final  String FP         = "fp";
+    public static final  String NEW_FP     = "newFp";
+    private static final Random RANDOM     = new Random();
+
+    public static void main(String[] args) {
+        String pw = md5Encrypt("680391");
+        System.out.println(pw);
+    }
+
+    /**
+     * MD5加密
+     *
+     * @param content
+     * @return
+     */
+    public static String md5Encrypt(String content) {
+        try {
+            content += SALT;
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(content.getBytes());
+            return new BigInteger(1, md.digest()).toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 创建token
+     *
+     * @return
+     */
+    public static String makeToken() {
+        byte[] sessionId = new byte[24];
+        RANDOM.nextBytes(sessionId);
+        byte[] encode = Base64.getUrlEncoder().encode(sessionId);
+        return new String(encode, StandardCharsets.UTF_8);
+    }
+}
